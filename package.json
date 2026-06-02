@@ -1,0 +1,21 @@
+{
+  "name": "trust-me",
+  "version": "1.0.0",
+  "description": "A comedy troll-platformer about a helpful mascot who only lies sometimes.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "deploy": "npm run build && gh-pages -d dist"
+  },
+  "dependencies": {
+    "phaser": "^3.90.0"
+  },
+  "devDependencies": {
+    "gh-pages": "^6.3.0",
+    "typescript": "^6.0.3",
+    "vite": "^7.2.4"
+  }
+}
