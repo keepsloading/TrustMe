@@ -7,10 +7,10 @@ export class DialogueSystem {
   private readonly text: Phaser.GameObjects.Text;
 
   constructor(scene: Phaser.Scene, line: string) {
-    const trusty = new Trusty(scene, 76, 84, 0.78);
-    const panel = scene.add.rectangle(266, 86, 356, 78, 0xffffff, 1).setStrokeStyle(4, COLORS.trusty);
+    const trusty = new Trusty(scene, 76, 126, 0.78);
+    const panel = scene.add.rectangle(266, 128, 356, 78, 0xffffff, 1).setStrokeStyle(4, COLORS.trusty);
     panel.setOrigin(0.5);
-    this.text = scene.add.text(118, 58, line, {
+    this.text = scene.add.text(118, 100, line, {
       fontFamily: FONT,
       fontSize: '20px',
       color: '#10131A',

@@ -22,7 +22,9 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     scene.physics.add.existing(this);
     this.setSize(30, 30).setCollideWorldBounds(false);
     this.keys = scene.input.keyboard!.addKeys('W,A,S,D,UP,LEFT,RIGHT,SPACE,R,ESC') as Record<string, Phaser.Input.Keyboard.Key>;
-    scene.input.on('pointerdown', () => this.handleAction());
+    scene.input.on('pointerdown', (pointer: Phaser.Input.Pointer) => {
+      if (pointer.y > 150) this.handleAction();
+    });
   }
 
   update(active = true): void {

@@ -53,6 +53,10 @@ export class SaveSystem {
     this.save(data);
   }
 
+  static reset(): void {
+    this.save(defaults());
+  }
+
   static finish(elapsedMs: number): void {
     const data = this.load();
     data.completionTime = data.completionTime ? Math.min(data.completionTime, elapsedMs) : elapsedMs;

@@ -51,7 +51,9 @@ export class LevelLoader {
       coins.add(sprite);
     });
 
-    const door = this.scene.physics.add.staticSprite(level.door.x, level.door.y, this.ensureDoorTexture());
+    const door = this.scene.physics.add.staticSprite(level.door.x, level.door.y, this.ensureDoorTextures().closed);
+    door.setData('closedTexture', this.ensureDoorTextures().closed);
+    door.setData('openTexture', this.ensureDoorTextures().open);
     door.setSize(46, 68).refreshBody();
     return { platforms, hazards, trapObjects, door, coins };
   }
@@ -74,15 +76,20 @@ export class LevelLoader {
     body.updateFromGameObject();
   }
 
-  private ensureDoorTexture(): string {
-    const key = 'success-door';
-    if (!this.scene.textures.exists(key)) {
+  private ensureDoorTextures(): { closed: string; open: string } {
+    const closed = 'success-door';
+    const open = 'success-door-open';
+    if (!this.scene.textures.exists(closed)) {
       const graphics = this.scene.make.graphics({ x: 0, y: 0 });
       graphics.fillStyle(COLORS.success).fillRoundedRect(0, 0, 46, 68, 8);
       graphics.fillStyle(0x10131a).fillCircle(34, 36, 4);
-      graphics.generateTexture(key, 46, 68);
+      graphics.generateTexture(closed, 46, 68);
+      graphics.clear();
+      graphics.fillStyle(COLORS.success).fillRoundedRect(0, 0, 46, 68, 8);
+      graphics.fillStyle(0x10131a).fillRoundedRect(10, 9, 26, 50, 5);
+      graphics.generateTexture(open, 46, 68);
       graphics.destroy();
     }
-    return key;
+    return { closed, open };
   }
 }

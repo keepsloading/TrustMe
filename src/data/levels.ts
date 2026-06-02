@@ -128,10 +128,10 @@ export const LEVELS: LevelConfig[] = [
     trustyLine: 'Shortcut seems faster.',
     spawn: { x: 86, y: 450 },
     door: { x: 870, y: 444 },
-    platforms: floor([{ x: 510, y: 380, width: 180, height: 24 }]),
-    hazards: [hiddenSpike(505, 354, 100)],
+    platforms: floor([{ x: 510, y: 410, width: 180, height: 24 }]),
+    hazards: [hiddenSpike(505, 384, 100)],
     traps: [],
-    signs: [{ x: 510, y: 328, text: 'SHORTCUT' }]
+    signs: [{ x: 510, y: 358, text: 'SHORTCUT' }]
   },
   {
     id: 4,
@@ -301,10 +301,10 @@ export const LEVELS: LevelConfig[] = [
     world: 4,
     title: 'Reversed',
     trustyLine: 'This is more intuitive.',
-    spawn: { x: 86, y: 450 },
-    door: { x: 875, y: 444 },
-    platforms: floor([{ x: 535, y: 420, width: 130, height: 24 }]),
-    hazards: [spike(390)],
+    spawn: { x: 875, y: 450 },
+    door: { x: 86, y: 444 },
+    platforms: [{ x: 480, y: 500, width: 860, height: 28 }, { x: 535, y: 420, width: 130, height: 24 }],
+    hazards: [spike(635)],
     traps: [],
     signs: [{ x: 450, y: 380, text: 'Controls updated for comfort.' }],
     mechanics: { controlsReversed: true }
@@ -340,12 +340,13 @@ export const LEVELS: LevelConfig[] = [
     world: 4,
     title: 'Wrong Way',
     trustyLine: 'Ignore suspicious signage.',
-    spawn: { x: 86, y: 450 },
-    door: { x: 165, y: 300 },
-    platforms: [{ x: 480, y: 500, width: 860, height: 28 }, { x: 175, y: 356, width: 170, height: 24 }, { x: 670, y: 390, width: 230, height: 24 }],
+    spawn: { x: 875, y: 450 },
+    door: { x: 165, y: 444 },
+    platforms: [{ x: 480, y: 500, width: 860, height: 28 }, { x: 670, y: 400, width: 230, height: 24 }],
     hazards: [spike(700, 364, 120)],
     traps: [],
-    signs: [{ x: 175, y: 312, text: 'WRONG WAY' }, { x: 670, y: 344, text: 'SAFE ROUTE' }]
+    signs: [{ x: 175, y: 420, text: 'WRONG WAY' }, { x: 670, y: 344, text: 'SAFE ROUTE' }],
+    mechanics: { controlsReversed: true }
   },
   {
     id: 21,
@@ -407,7 +408,7 @@ export const LEVELS: LevelConfig[] = [
     hazards: [spike(390, 474, 360)],
     traps: [{ type: 'fakeWall', x: 90, y: 405, width: 26, height: 95 }],
     signs: [{ x: 270, y: 420, text: 'ONLY FORWARD' }],
-    mechanics: { hiddenLeftRoute: true }
+    mechanics: { hiddenLeftRoute: true, controlsReversed: true }
   },
   {
     id: 26,
@@ -432,7 +433,7 @@ export const LEVELS: LevelConfig[] = [
     trustyLine: 'They are being dramatic.',
     spawn: { x: 86, y: 450 },
     door: { x: 875, y: 444 },
-    platforms: floor([{ x: 510, y: 385, width: 115, height: 24 }, { x: 690, y: 440, width: 125, height: 24 }]),
+    platforms: floor([{ x: 510, y: 405, width: 115, height: 24 }, { x: 690, y: 440, width: 125, height: 24 }]),
     hazards: [spike(365), spike(510, 359, 80)],
     traps: [fakeFloor(690, 440, 95)],
     signs: [{ x: 332, y: 425, text: 'Trust me.' }, { x: 510, y: 326, text: 'Do not trust him.' }, { x: 690, y: 386, text: 'Neither.' }]

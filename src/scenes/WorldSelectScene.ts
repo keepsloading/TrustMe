@@ -48,5 +48,17 @@ export class WorldSelectScene extends Phaser.Scene {
       fontSize: '18px',
       color: '#F5F5F5'
     }).setOrigin(0.5);
+
+    const reset = this.add.rectangle(838, 96, 168, 34, COLORS.danger).setInteractive({ useHandCursor: true });
+    this.add.text(838, 96, 'Reset Progress', {
+      fontFamily: FONT,
+      fontSize: '18px',
+      color: '#10131A',
+      fontStyle: '700'
+    }).setOrigin(0.5);
+    reset.on('pointerdown', () => {
+      SaveSystem.reset();
+      this.scene.restart();
+    });
   }
 }
