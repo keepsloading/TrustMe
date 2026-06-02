@@ -1,0 +1,24 @@
+:root {
+  --background: #10131A;
+  --platform: #FFFFFF;
+  --player: #FFD54A;
+  --trusty: #4D7DFF;
+  --danger: #FF5A5A;
+  --success: #63E88F;
+  --text: #F5F5F5;
+}
+
+html,
+body,
+#game {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: var(--background);
+  font-family: 'Fredoka', system-ui, sans-serif;
+}
+
+canvas {
+  display: block;
+}
