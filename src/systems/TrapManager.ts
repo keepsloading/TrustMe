@@ -8,6 +8,7 @@ export class TrapManager {
   private readonly dynamicPlatforms: Phaser.Physics.Arcade.Group;
   private readonly killers: Phaser.Physics.Arcade.Group;
   private helper?: Phaser.Physics.Arcade.Sprite;
+  private helperVisual?: Trusty;
   private fakeOverlay?: Phaser.GameObjects.Container;
   private flipped = false;
   private floorTimerSet = false;
@@ -61,6 +62,8 @@ export class TrapManager {
         const platform = this.scene.physics.add.sprite(trap.x, trap.y, this.rectTexture('moving-platform', trap.width, trap.height, COLORS.platform));
         platform.setImmovable(true).setData('trap', trap).setData('startX', trap.x).setData('startY', trap.y).setData('active', !trap.startsOnLanding);
         (platform.body as Phaser.Physics.Arcade.Body).setAllowGravity(false);
+        const mascot = new Trusty(this.scene, trap.x, trap.y - trap.height / 2 - 30, 0.38);
+        platform.setData('mascot', mascot);
         this.dynamicPlatforms.add(platform);
       }
       if (trap.type === 'fallingCeiling') {
@@ -96,6 +99,8 @@ export class TrapManager {
       if (Math.abs(offset) >= distance) platform.setData('direction', -direction);
       const finalDirection = platform.getData('direction') ?? 1;
       platform.setVelocity(trap.axis === 'y' ? 0 : finalDirection * speed, trap.axis === 'y' ? finalDirection * speed : 0);
+      const mascot = platform.getData('mascot') as Trusty | undefined;
+      mascot?.setPosition(platform.x, platform.y - platform.height / 2 - 30);
       return true;
     });
   }
@@ -155,6 +160,7 @@ export class TrapManager {
     const offset = this.level.mechanics?.trustyShadow ? -75 : 72;
     const target = this.player.x + offset;
     this.helper.setVelocityX(Phaser.Math.Clamp((target - this.helper.x) * 3, -180, 180));
+    this.helperVisual?.setPosition(this.helper.x, this.helper.y - 30);
   }
 
   private triggerHelperTrap(): void {
@@ -179,7 +185,7 @@ export class TrapManager {
   }
 
   private createHelper(x: number, y: number): void {
-    new Trusty(this.scene, x, y - 30, 0.45);
+    this.helperVisual = new Trusty(this.scene, x, y - 30, 0.45);
     const key = this.rectTexture('trusty-hitbox', 40, 46, COLORS.trusty);
     this.helper = this.scene.physics.add.sprite(x, y, key).setAlpha(0.05);
     (this.helper.body as Phaser.Physics.Arcade.Body).setAllowGravity(false);

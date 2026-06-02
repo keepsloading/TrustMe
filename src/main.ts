@@ -6,14 +6,18 @@ import { WorldSelectScene } from './scenes/WorldSelectScene';
 import { GameScene } from './scenes/GameScene';
 import { CreditsScene } from './scenes/CreditsScene';
 
-const config: Phaser.Types.Core.GameConfig = {
+const config = {
   type: Phaser.AUTO,
   parent: 'game',
   width: 960,
   height: 540,
+  resolution: Math.min(window.devicePixelRatio || 1, 2),
   backgroundColor: '#10131A',
   pixelArt: false,
-  roundPixels: true,
+  render: {
+    antialias: true,
+    roundPixels: true
+  },
   physics: {
     default: 'arcade',
     arcade: {
@@ -26,6 +30,6 @@ const config: Phaser.Types.Core.GameConfig = {
     autoCenter: Phaser.Scale.CENTER_BOTH
   },
   scene: [BootScene, MenuScene, WorldSelectScene, GameScene, CreditsScene]
-};
+} as Phaser.Types.Core.GameConfig;
 
 new Phaser.Game(config);

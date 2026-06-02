@@ -22,4 +22,8 @@ export class Trusty {
       ease: 'Sine.easeInOut'
     });
   }
+
+  setPosition(x: number, y: number): void {
+    this.container.setPosition(x, y);
+  }
 }

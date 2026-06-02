@@ -70,7 +70,7 @@ export class GameScene extends Phaser.Scene {
     this.player.update();
     this.traps.update(time);
     this.timerText.setText(this.formatTime(Math.max(0, Date.now() - SaveSystem.load().startedAt)));
-    if (this.player.y > 620 || this.player.y < -120) this.killPlayer('Gravity had notes.');
+    if (this.player.y > 560 || this.player.y < -120) this.killPlayer('Gravity had notes.');
     if (this.reverseText) {
       const remaining = 5 - Math.floor((time / 1000) % 5);
       this.reverseText.setText(`${this.player.reversed ? 'REVERSED' : 'NORMAL'} ${remaining}`);
@@ -88,7 +88,7 @@ export class GameScene extends Phaser.Scene {
   private showTitleCard(): void {
     const card = this.add.container(480, 146).setDepth(100);
     const bg = this.add.rectangle(0, 0, 420, 72, COLORS.platform);
-    const title = this.add.text(0, -12, `Level ${this.level.id}: ${this.level.title}`, { fontFamily: FONT, fontSize: '25px', color: '#10131A', fontStyle: '700' }).setOrigin(0.5);
+    const title = this.add.text(0, -12, `Level ${this.level.id}`, { fontFamily: FONT, fontSize: '25px', color: '#10131A', fontStyle: '700' }).setOrigin(0.5);
     const world = this.add.text(0, 18, `World ${this.level.world}`, { fontFamily: FONT, fontSize: '17px', color: '#10131A' }).setOrigin(0.5);
     card.add([bg, title, world]);
     this.tweens.add({ targets: card, y: 126, alpha: 0, delay: 1200, duration: 450, onComplete: () => card.destroy() });

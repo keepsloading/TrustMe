@@ -14,9 +14,11 @@ export class WorldSelectScene extends Phaser.Scene {
     this.add.text(480, 54, 'World Select', { fontFamily: FONT, fontSize: '42px', color: '#F5F5F5', fontStyle: '700' }).setOrigin(0.5);
     this.add.text(480, 96, `Deaths: ${save.totalDeaths}`, { fontFamily: FONT, fontSize: '20px', color: '#F5F5F5' }).setOrigin(0.5);
 
+    const unlockedWorld = Math.ceil(save.highestUnlockedLevel / 5);
     WORLDS.forEach((world, index) => {
       const worldNumber = index + 1;
-      this.add.text(110 + index * 142, 148, `${worldNumber}. ${world}`, {
+      const label = worldNumber <= unlockedWorld ? `${worldNumber}. ${world}` : `${worldNumber}. ???`;
+      this.add.text(110 + index * 142, 148, label, {
         fontFamily: FONT,
         fontSize: '17px',
         color: '#F5F5F5',
@@ -33,7 +35,7 @@ export class WorldSelectScene extends Phaser.Scene {
       const unlocked = level.id <= save.highestUnlockedLevel;
       const color = unlocked ? COLORS.platform : 0x4b5060;
       const rect = this.add.rectangle(x, y, 94, 40, color).setInteractive({ useHandCursor: unlocked });
-      this.add.text(x, y, `${level.id}`, { fontFamily: FONT, fontSize: '22px', color: '#10131A', fontStyle: '700' }).setOrigin(0.5);
+      this.add.text(x, y, unlocked ? `${level.id}` : '?', { fontFamily: FONT, fontSize: '22px', color: '#10131A', fontStyle: '700' }).setOrigin(0.5);
       if (unlocked) {
         rect.on('pointerover', () => rect.setFillStyle(COLORS.success));
         rect.on('pointerout', () => rect.setFillStyle(COLORS.platform));
@@ -41,7 +43,7 @@ export class WorldSelectScene extends Phaser.Scene {
       }
     });
 
-    this.add.text(480, 506, 'R restarts levels. Esc pauses. Arrow keys, WASD, Space.', {
+    this.add.text(480, 506, 'Click once to move. Click again or press Space to jump. R restarts. Esc pauses.', {
       fontFamily: FONT,
       fontSize: '18px',
       color: '#F5F5F5'

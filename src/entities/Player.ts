@@ -5,6 +5,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
   private keys: Record<string, Phaser.Input.Keyboard.Key>;
   private readonly speed = 235;
   private readonly jumpSpeed = 520;
+  private running = false;
   reversed = false;
   gravityFlipped = false;
 
@@ -19,8 +20,9 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     super(scene, x, y, texture);
     scene.add.existing(this);
     scene.physics.add.existing(this);
-    this.setSize(30, 30).setCollideWorldBounds(true);
+    this.setSize(30, 30).setCollideWorldBounds(false);
     this.keys = scene.input.keyboard!.addKeys('W,A,S,D,UP,LEFT,RIGHT,SPACE,R,ESC') as Record<string, Phaser.Input.Keyboard.Key>;
+    scene.input.on('pointerdown', () => this.handleAction());
   }
 
   update(active = true): void {
@@ -28,16 +30,21 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       this.setVelocityX(0);
       return;
     }
-    const left = this.keys.A.isDown || this.keys.LEFT.isDown;
-    const right = this.keys.D.isDown || this.keys.RIGHT.isDown;
-    const direction = (right ? 1 : 0) - (left ? 1 : 0);
+    const action = Phaser.Input.Keyboard.JustDown(this.keys.SPACE) || Phaser.Input.Keyboard.JustDown(this.keys.W) || Phaser.Input.Keyboard.JustDown(this.keys.UP) || Phaser.Input.Keyboard.JustDown(this.keys.RIGHT) || Phaser.Input.Keyboard.JustDown(this.keys.D);
+    if (action) this.handleAction();
+    const direction = this.running ? 1 : 0;
     const finalDirection = this.reversed ? -direction : direction;
     this.setVelocityX(finalDirection * this.speed);
-    if (direction !== 0) this.setFlipX(direction < 0);
+    if (direction !== 0) this.setFlipX(finalDirection < 0);
+  }
 
+  private handleAction(): void {
+    if (!this.running) {
+      this.running = true;
+      return;
+    }
     const touching = this.gravityFlipped ? this.body!.blocked.up || this.body!.touching.up : this.body!.blocked.down || this.body!.touching.down;
-    const jump = Phaser.Input.Keyboard.JustDown(this.keys.SPACE) || Phaser.Input.Keyboard.JustDown(this.keys.W) || Phaser.Input.Keyboard.JustDown(this.keys.UP);
-    if (jump && touching) {
+    if (touching) {
       this.setVelocityY(this.gravityFlipped ? this.jumpSpeed : -this.jumpSpeed);
       this.scene.tweens.add({ targets: this, scaleX: 0.84, scaleY: 1.18, duration: 80, yoyo: true });
     }
